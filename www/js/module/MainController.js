@@ -9,5 +9,6 @@ mCon.controller ( 'MainAppCtrl', function ( $scope ) {
 	
 	$scope.onClick = function () {
 		$scope.status = "verbunden";
+        $scope.setOverlay = true;
 	}
 });
