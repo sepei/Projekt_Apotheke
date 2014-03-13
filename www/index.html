@@ -25,6 +25,59 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <style type="text/css">
+		
+		
+		.overlay {
+position: absolute;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+top: 1px;
+left: -130px;
+width: 200%;
+height: 200%;
+z-index: 10;
+}
+
+.orange {
+	background-color: rgb(255,108,32);
+}
+
+.close {
+-webkit-transition: margin-right 0.2s ease-in-out;
+-moz-transition: margin-right 0.2s ease-in-out;
+-ms-transition: margin-right 0.2s ease-in-out;
+-o-transition: margin-right 0.2s ease-in-out;
+transition: margin-right 0.2s ease-in-out;
+background: url(img/closeS.png) no-repeat;
+background-size: 25px;
+display: block;
+width: 50px;
+height: 26px;
+position: absolute;
+right: 10px;
+top: 5px;
+}
+
+.close:hover {
+	-webkit-transition: margin-right 0.2s ease-in-out;
+-moz-transition: margin-right 0.2s ease-in-out;
+-ms-transition: margin-right 0.2s ease-in-out;
+-o-transition: margin-right 0.2s ease-in-out;
+transition: margin-right 0.2s ease-in-out;
+background-position: 0 -26px;
+margin-right: 5px;
+}
+
+.close:active {
+	-webkit-transition: margin-right 0.2s ease-in-out;
+-moz-transition: margin-right 0.2s ease-in-out;
+-ms-transition: margin-right 0.2s ease-in-out;
+-o-transition: margin-right 0.2s ease-in-out;
+transition: margin-right 0.2s ease-in-out;
+background-position: 0 -26px;
+margin-right: 5px;
+}
 
 input {
 	width: 260px;
@@ -227,7 +280,7 @@ input:focus {
   <div id="footerbox"><img id="overlays" src="img/footer.png"> </div> 
   </div>
 <div id="topbox"><img id="overlays" src="img/header.png"> </div>
-  <div id="inputbox" ng-controller="MainAppCtrl"><input type="text"> <input type="button" name="Suchbutton" ng-click="onClick()" value="{{status}}"> 
+  <div id="inputbox" ng-controller="MainAppCtrl"><input id="search" type="text"> <input type="button" name="Suchbutton" ng-click="onClick()" value="{{status}}"> 
   <div ng-show="setOverlay" align="center" style="
     position: fixed;
     z-index: 130;
@@ -236,34 +289,41 @@ input:focus {
     height: 100%;
     background-color: white;
     left: 0px;
-">    <div ng-init="medicaments = [
-    {name:'Acetylsalicylsäure', age:25, gender:'boy'},
-    {name:'ASS Kreuz', age:30, gender:'girl'},
-    {name:'ASS 500', age:28, gender:'girl'},
-    {name:'Ancid', age:15, gender:'girl'},
-    {name:'Megalac Pantoprazol', age:28, gender:'girl'},
-    {name:'Johanniskraut AL', age:95, gender:'boy'},
-    {name:'Wick Hustenpastillen', age:50, gender:'boy'},
-    {name:'NAC AL akut', age:27, gender:'girl'},
-    {name:'Thymianverlan Lösung', age:40, gender:'boy'},
-    {name:'Melrosum Hustensirup', age:60, gender:'girl'}
-  ]"  style="
-    position: absolute;
-    z-index: 100;
-    top:100px;
+"> 
+
+<div ng-init=""  style="
+position: absolute;
+z-index: 1000;
+top: 200px;
+width: 270px;
+left: 50%;
+margin-left: -135px;
 ">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
     <input type="search" ng-model="q" placeholder="Medikamente filtern..." />
     <ul class="example-animate-container" style="">
-      <li class="animate-repeat" ng-repeat="medicament in medicaments | filter:q">
-{{medicament.name}}
+      <li class="animate-repeat" ng-repeat="medicament in medi.medicaments | filter:q">
+<a ng-click="doIT(medicament.name)" class="osx" href="#">{{medicament.name}}</a> <!--<div id="inhalt">{{medicament.wirkung}}</div>-->
+<div id="{{'a'+medicament.name}}" class="overlay orange" style="display:none"><span class="close" ng-click="doIT(medicament.name)"></span><br><br>{{medicament.wirkung}}</div>
       </li>
     </ul>
+    
+    
+    <script type="text/javascript">
+
+function toggleO(which){
+	$('#' + which).first().fadeToggle( 150, "linear" );
+}
+
+</script>
+    
+    
   </div></div>
 </div>
 
         
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
 		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 		<script type="text/javascript" src="js/jquery.animate-enhanced.min.js"></script>
 		<script type="text/javascript" src="js/jquery.superslides.min.js"></script>
@@ -271,6 +331,11 @@ input:focus {
         <script type="text/javascript" src="js/module/app.js"></script>
         <script type="text/javascript" src="js/module/MainController.js"></script>
         <script type="text/javascript" src="phonegap.js"></script>
+        
+        <script type='text/javascript' src='jsm/js/jquery.simplemodal.js'></script>
+        <link type='text/css' href='jsm/css/osx.css' rel='stylesheet' media='screen' />
+        
+        
         <!--<script type="text/javascript" src="js/index.js"></script>-->
         <script type="text/javascript">
             app.initialize();
